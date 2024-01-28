@@ -6,7 +6,7 @@
 _Debug = 0	# can be chucked out, used to print short WIP messages, and to execute the function tests.
 
 
-class Piico_info():
+class Piico_info(object):
     """
     PiicoDev devices presence tests
     Murray T 20231020   (v 1.0)
