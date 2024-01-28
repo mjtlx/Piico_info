@@ -159,6 +159,7 @@ Address Switch has been set ON, which sets the address to 0x52.
 
 This code should output the result in the next section.
 
+```
     import PiicoDev_Unified
     from Piico_info import Piico_info
 
@@ -227,11 +228,10 @@ This code should output the result in the next section.
     tests.show_all('long','show')
 
     print('\n********** Example complete ************************')
-
+```
 ## Output of Example
 
-********** Example start ************************
-
+```
 ********** Example start ************************
 
 >> instantiate
@@ -359,3 +359,4 @@ Unknown ID  255
 82 0x52 PiicoDev Air Quality Sensor ENS160 (ASW on)
 
 ********** Example complete ************************
+```
