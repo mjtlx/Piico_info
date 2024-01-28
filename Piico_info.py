@@ -2,6 +2,7 @@
 #
 # PiicoDev devices presence tests
 #
+from machine import Pin, I2C
 
 _Debug = 0	# can be chucked out, used to print short WIP messages, and to execute the function tests.
 
