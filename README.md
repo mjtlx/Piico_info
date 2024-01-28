@@ -176,12 +176,12 @@ This code should output the result in the next section.
     print('\n>> clear()')
     tests.clear()
 
-    print('\n... and show list')
+    print('... and show list')
     print(tests.connected)
 
     print('\n>> rescan()')
     tests.rescan()
-    print('\n... and show list')
+    print('... and show list')
     print(tests.connected)
 
     print('\n>> show_int()')
@@ -240,12 +240,10 @@ This code should output the result in the next section.
 [16, 60, 82, 83, 119]
 
 >> clear()
-
 ... and show list
 []
 
 >> rescan()
-
 ... and show list
 [16, 60, 82, 83, 119]
 
