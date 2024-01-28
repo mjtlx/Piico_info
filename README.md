@@ -152,7 +152,7 @@ The PiicoDev devices connected to the test system were:
 - VEML6030 ambient light sensor         Address 0x10 (16.)
 - (AdaFruit) LTR390 Ambient/UV sensor   Address 0x53 (83.)
 
-NOTE: the default address for the ENS160 is 0x53, but to avoid conflict witht he LTR390, the 
+NOTE: the default address for the ENS160 is 0x53, but to avoid conflict with the LTR390, the 
 Address Switch has been set ON, which sets the address to 0x52.
 
 ## Code
