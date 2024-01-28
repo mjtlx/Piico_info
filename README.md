@@ -142,3 +142,220 @@ These constants can be used after instantiation in user code if prefixed with in
 The "Constants" and the __TWO__ dictionary lists (main and conflicts) MUST be checked / updated
 when new PiicoDev devices are created by Core Electronics. 
 
+# Example use
+
+The PiicoDev devices connected to the test system were:
+
+- Oled display                          Address 0x3C (60.)
+- BME280 sensor Atmospheric sensor      Address 0x77 (119.)
+- ENS160 Air quality sensor             Address 0x52 (82.) - ASW on
+- VEML6030 ambient light sensor         Address 0x10 (16.)
+- (AdaFruit) LTR390 Ambient/UV sensor   Address 0x53 (83.)
+
+NOTE: the default address for the ENS160 is 0x53, but to avoid conflict witht he LTR390, the 
+Address Switch has been set ON, which sets the address to 0x52.
+
+## Code
+
+This code should output the result in the next section.
+
+    import PiicoDev_Unified
+    from Piico_info import Piico_info
+
+    print('********** Example start ************************')
+    print('\n>> instantiate')
+    tests = Piico_info()
+
+    # for an alternate i2c bus on GPIO6 and GPOI7
+    #    test_altbus = Piico_info(id=1, scl=Pin(7), sda=Pin(6))
+
+    print('\n>> tests.connected')
+    print(tests.connected)
+
+    print('\n>> clear()')
+    tests.clear()
+
+    print('\n... and show list')
+    print(tests.connected)
+
+    print('\n>> rescan()')
+    tests.rescan()
+    print('\n... and show list')
+    print(tests.connected)
+
+    print('\n>> show_int()')
+    tests.show_int()
+    print('\n>> show_hex()')
+    tests.show_hex()
+
+    print('\n>> how_many_connected()')
+    print( tests.how_many_connected() )
+
+    print('\n>> details()')
+    tests.details()
+    print('\n>> details(\'short\')')
+    tests.details('short')
+    print('\n>> details(\'long\')')
+    tests.details('long')
+
+    print('\n>> is_ID_connected(119) -- decimal id')
+    print( tests.is_ID_connected(119) )
+
+    print('\n>> is_ID_connected(0x77) -- hex id')
+    print( tests.is_ID_connected(0x77) )
+
+    print('\n>> is_ID_connected(tests.__BME280_ID) -- \'Constant id\', device has unique address ')
+    if tests.is_ID_connected(tests.__BME280_ID):
+        print('have BME280')
+
+    print('\n>> is_ID_connected(tests.__POTENTIOMETER_ID) -- \'Constant id\', device is a possible conflicting address ')
+    if tests.is_ID_connected(tests.__POTENTIOMETER_ID):
+        print('something is connected, probably Ultrasonic rangefinder since cant distinguish conflicting IDs')
+    else:
+        print('oops. no actual device connected.')
+        
+    print('\n>> what_is(0xff) -- NB invalid id value')
+    tests.what_is(0xff)	# no such ID, will complain
+    
+    print('\n>> what_is(53, \'long\'')
+    tests.what_is(53, 'long')
+
+    print('\n>> show_all()')
+    tests.show_all()
+
+    print('\n>> show_all(\'long\',\'show\')')
+    tests.show_all('long','show')
+
+    print('\n********** Example complete ************************')
+
+## Output of Example
+
+********** Example start ************************
+
+********** Example start ************************
+
+>> instantiate
+
+>> tests.connected
+[16, 60, 82, 83, 119]
+
+>> clear()
+
+... and show list
+[]
+
+>> rescan()
+
+... and show list
+[16, 60, 82, 83, 119]
+
+>> show_int()
+[16, 60, 82, 83, 119]
+
+>> show_hex()
+['0x10', '0x3c', '0x52', '0x53', '0x77']
+
+>> how_many_connected()
+5
+
+>> details()
+16 0x10 Colour Sensor
+   vvv Possible conflict vvv
+16 0x10 Ambient Light Sensor (ASW off)
+60 0x3c OLED Module
+82 0x52 Real Time Clock
+   vvv Possible conflict vvv
+82 0x52 Air Quality Sensor (ASW on)
+83 0x53 Air Quality Sensor (ASW off)
+119 0x77 Atmospheric Sensor
+
+>> details('short')
+16 0x10 VEML6040
+   vvv Possible conflict vvv
+16 0x10 VEML6030 (ASW off)
+60 0x3c SSD1306
+82 0x52 RV3028
+   vvv Possible conflict vvv
+82 0x52 ENS160 (ASW on)
+83 0x53 ENS160 (ASW off)
+119 0x77 BME280
+
+>> details('long')
+16 0x10 PiicoDev VEML6040 Colour Sensor
+   vvv Possible conflict vvv
+16 0x10 PiicoDev VEML6030 Ambient Light Sensor (ASW off)
+60 0x3c PiicoDev OLED Module SSD1306
+82 0x52 PiicoDev Real Time Clock (RTC) RV3028
+   vvv Possible conflict vvv
+82 0x52 PiicoDev Air Quality Sensor ENS160 (ASW on)
+83 0x53 PiicoDev Air Quality Sensor ENS160 (ASW off)
+119 0x77 PiicoDev BME280 Atmospheric Sensor
+
+>> is_ID_connected(119) -- decimal id
+1
+
+>> is_ID_connected(0x77) -- hex id
+1
+
+>> is_ID_connected(tests.__BME280_ID) -- 'Constant id', device has unique address 
+have BME280
+
+>> is_ID_connected(tests.__POTENTIOMETER_ID) -- 'Constant id', device is a possible conflicting address 
+oops. no actual device connected.
+
+>> what_is(0xff) -- NB invalid id value
+Unknown ID  255
+
+>> what_is(53, 'long'
+53 0x35 PiicoDev Ultrasonic Rangefinder Module
+   vvv Possible conflict vvv
+53 0x35 PiicoDev Potentiometer (Rotary)
+
+>> show_all()
+8 0x8 RGB LED Module
+16 0x10 Colour Sensor
+24 0x18 Accelerometer (ASW on)
+25 0x19 Accelerometer (ASW off)
+26 0x1a Transceiver
+28 0x1c Magnetometer
+40 0x28 Capacitive Touch Sensor
+41 0x29 Laser Distance Sensor
+44 0x2c RFID Module
+53 0x35 Ultrasonic Rangefinder
+60 0x3c OLED Module
+66 0x42 Button
+68 0x44 Servo Driver
+72 0x48 Precision Temperature Sensor
+82 0x52 Real Time Clock
+83 0x53 Air Quality Sensor (ASW off)
+92 0x5c Buzzer Module
+118 0x76 Pressure Sensor
+119 0x77 Atmospheric Sensor
+
+>> show_all('long','show')
+8 0x8 PiicoDev 3x RGB LED Module
+16 0x10 PiicoDev VEML6040 Colour Sensor
+24 0x18 PiicoDev 3-Axis Accelerometer LIS3DH (ASW on)
+25 0x19 PiicoDev 3-Axis Accelerometer LIS3DH (ASW off)
+26 0x1a PiicoDev Transceiver 915MHz
+28 0x1c PiicoDev Magnetometer QMC6310
+40 0x28 PiicoDev Capacitive Touch Sensor
+41 0x29 PiicoDev Laser Distance Sensor VL53L1X
+44 0x2c PiicoDev RFID Module (NFC 13.56MHz)
+53 0x35 PiicoDev Ultrasonic Rangefinder Module
+60 0x3c PiicoDev OLED Module SSD1306
+66 0x42 PiicoDev Button
+68 0x44 PiicoDev Servo Driver (4 Channel)
+72 0x48 PiicoDev TMP117 Precision Temperature Sensor
+82 0x52 PiicoDev Real Time Clock (RTC) RV3028
+83 0x53 PiicoDev Air Quality Sensor ENS160 (ASW off)
+92 0x5c PiicoDev Buzzer Module
+118 0x76 PiicoDev Pressure Sensor MS5637
+119 0x77 PiicoDev BME280 Atmospheric Sensor
+-- conflicting --
+16 0x10 PiicoDev VEML6030 Ambient Light Sensor (ASW off)
+53 0x35 PiicoDev Potentiometer (Rotary)
+72 0x48 PiicoDev VEML6030 Ambient Light Sensor (ASW on)
+82 0x52 PiicoDev Air Quality Sensor ENS160 (ASW on)
+
+********** Example complete ************************
