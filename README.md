@@ -17,12 +17,12 @@ This library provides support for the Core electronics PiicoDev system, generati
 ## Instantiation
 
     # the default for standard PiicoDev setup
-    tests = PiicoDev_test()
+    tests = Piico_info()
     
 OR
 
     # for an alternate i2c bus on GPIO6 and GPOI7
-    test_altbus = PiicoDev_test(id=1, scl=Pin(7), sda=Pin(6))
+    test_altbus = Piico_info(id=1, scl=Pin(7), sda=Pin(6))
     
 Immediately after this you can display what has been detected on the default i2c bus by either
     
