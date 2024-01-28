@@ -218,7 +218,7 @@ This code should output the result in the next section.
     print('\n>> what_is(0xff) -- NB invalid id value')
     tests.what_is(0xff)	# no such ID, will complain
     
-    print('\n>> what_is(53, \'long\'')
+    print('\n>> what_is(53, \'long\')')
     tests.what_is(53, 'long')
 
     print('\n>> show_all()')
@@ -304,7 +304,7 @@ oops. no actual device connected.
 >> what_is(0xff) -- NB invalid id value
 Unknown ID  255
 
->> what_is(53, 'long'
+>> what_is(53, 'long')
 53 0x35 PiicoDev Ultrasonic Rangefinder Module
    vvv Possible conflict vvv
 53 0x35 PiicoDev Potentiometer (Rotary)
