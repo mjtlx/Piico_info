@@ -6,7 +6,7 @@
 _Debug = 0	# can be chucked out, used to print short WIP messages, and to execute the function tests.
 
 
-class PiicoDev_test():
+class Piico_info():
     """
     PiicoDev devices presence tests
     Murray T 20231020   (v 1.0)
@@ -25,10 +25,10 @@ class PiicoDev_test():
     Instantiation
     -------------
         # the default for standard PiicoDev setup
-        tests = PiicoDev_test()
+        tests = Piico_info()
     OR
         # for an alternate i2c bus on GPIO6 and GPOI7
-        test_altbus = PiicoDev_test(id=1, scl=Pin(7), sda=Pin(6))
+        test_altbus = Piico_info(id=1, scl=Pin(7), sda=Pin(6))
     
     Immediately after this you can display what has been detected on the default i2c bus by either
     
@@ -388,10 +388,10 @@ class PiicoDev_test():
 ###########################################
 
 if _Debug:
-    tests = PiicoDev_test()
+    tests = Piico_info()
 
     # for an alternate i2c bus on GPIO6 and GPOI7
-    test_altbus = PiicoDev_test(id=1, scl=Pin(7), sda=Pin(6))
+    test_altbus = Piico_info(id=1, scl=Pin(7), sda=Pin(6))
 
     print('tests.connected')
     print(tests.connected)
