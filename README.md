@@ -16,7 +16,10 @@ This library provides support for the Core electronics PiicoDev system, generati
 
 ## Instantiation
 
-    # the default for standard PiicoDev setup
+	# import the library code
+	from Piico_info import Piico_info
+	 
+    # then instantiate it (this is the default for standard PiicoDev setup)
     tests = Piico_info()
     
 OR
