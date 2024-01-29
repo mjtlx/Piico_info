@@ -1,7 +1,22 @@
-######################################
-#
-# PiicoDev devices presence tests
-#
+"""
+ Piico_info
+
+ PiicoDev devices presence tests
+
+ (c) 2024 Murray Taylor
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the BSD 3-clause License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    You should have received a copy of the BSD 3-clause License
+    along with this program; if not, a copy is available on the web at
+    https://https://opensource.org/license/bsd-3-clause/
+"""    
+
 from machine import Pin, I2C
 
 _Debug = 0	# can be chucked out, used to print short WIP messages, and to execute the function tests.
