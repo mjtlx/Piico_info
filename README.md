@@ -51,7 +51,7 @@ these print a list of detected i2c ID's in decimal
 
 ### Functions returning more info
 
-#### details()
+### details()
 
 The details() function accesses a pre-defined dictionary of devices made by core Electronics
 and displays information about _ALL_ connected devices
@@ -60,6 +60,8 @@ and displays information about _ALL_ connected devices
     details('what')     - prints 'human name' of the connected ID's e.g. 'OLED Module'    
     details('short')    - prints 'short_name' of the connected ID's e.g. 'SSD1306'
     details('long')     - prints 'long_name' of the connected ID's e.g. 'PiicoDev OLED Module SSD1306'
+
+#### External User dictionary
 
 The details() function can also access a user defined dictionary of devices from other manufacturers.
 
@@ -83,15 +85,26 @@ display this if the LTR390 is in the connected devices list, as well as info abo
     details('short', extern_list) - prints 'short_name' of the connected ID's e.g. 'LTR390'
     details('long', extern_list)  - prints 'long_name' of the connected ID's e.g. 'Adafruit LTR390 Ambient Light-UV Sensor'
 
-#### what_is()
+### what_is()
 
-The what_is() function accesses a pre-defined dictionary of devices made by core Electronics
+The what_is() function accesses a pre-defined dictionary of devices made by Core Electronics
 and displays information about the device with the specified id in hex or decimal or by a prefefined constant (see below)
 
     what_is(id)             - prints 'human name' of the given ID e.g. 'RGB LED Module' (default is 'what')
     what_is(id, 'what')     - prints 'human name' of the given ID e.g. 'RGB LED Module'
     what_is(id, 'short')    - prints 'short_name' of the given ID e.g. 'LED'
     what_is(id, 'long')     - prints 'long_name' of the given ID e.g. 'PiicoDev 3x RGB LED Module'
+
+#### External User dictionary
+
+The what_is() function can also access a user defined dictionary of devices from other manufacturers.
+
+    what_is(id, extern_list)             - prints 'human name' of the given ID e.g. 'RGB LED Module' (default is 'what')
+    what_is(id, 'what', extern_list)     - prints 'human name' of the given ID e.g. 'RGB LED Module'
+    what_is(id, 'short', extern_list)    - prints 'short_name' of the given ID e.g. 'LED'
+    what_is(id, 'long', extern_list)     - prints 'long_name' of the given ID e.g. 'PiicoDev 3x RGB LED Module'
+
+**NOTE:** in both cases, what_is() will highlight potential address conflicts 
 
 ### show_all()
 
@@ -107,9 +120,20 @@ and displays all the selected information 'type'
   
 With extra option 'show' also displays similar entries from the conflicts dictionary (see below)
   
-    show_all('what', 'show')    - prints all 'human names' from the conflict internal dictonary
-    show_all('short', show')    - prints all 'shout names' from the conflict internal dictonary
-    show_all('long', 'show')    - prints all 'long names' from the conflict internal dictonary
+    show_all('what', 'show')    - prints all 'human names' from both internal dictonaries
+    show_all('short', 'show')    - prints all 'short names' from both internal dictonaries
+    show_all('long', 'show')    - prints all 'long names' from both internal dictonaries
+
+#### External User dictionary
+
+The show_all() function can also access a user defined dictionary of devices from other manufacturers.
+
+    show_all('what', 'show', extern_list)    - prints all 'human names' from both internal dictonaries
+                                		AND the external user defined dictionary
+    show_all('short', extern_list)    - prints all 'short names' from the main internal dictonary
+                                		AND the external user defined dictionary
+    show_all('long', 'show', extern_list)    - prints all 'long names' from both internal dictonaries
+                                		AND the external user defined dictionary
             
 ## Address conflicts
 
@@ -119,7 +143,7 @@ to a non default setting (if available), OR by programatically changing the devi
     
 This module only 'knows' about PiicoDev devices, however an external dictionary can be provided by the user.
     
-** The module CANNOT detect an actual address conflict on a given i2c bus. This is a characteristic of the bus itself.
+**NOTE:** The module CANNOT detect an actual address conflict on a given i2c bus. This is a characteristic of the bus itself.
     
 ## 'Constant' values
 
