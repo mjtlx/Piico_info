@@ -25,7 +25,7 @@ _Debug = 0	# can be chucked out, used to print short WIP messages, and to execut
 class Piico_info(object):
     """
     PiicoDev devices presence tests
-    Murray T 20231020   (v 1.0)
+    Murray T 20240129   (v 1.4)
     @Murray125532
 
     the simple tests without this module
