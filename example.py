@@ -54,7 +54,7 @@ tests.details('long')
 
 print('\n>> Define a additional dictionary with your own device(s)')
 print('extern_list: dict = {')
-print('    0x53: {		# 16.  0x10')
+print('    0x53: {		# 83.  0x53')
 print('        \'what\': \'Ambient Light-UV Sensor\',')
 print('        \'long_name\': \'Adafruit LTR390 Ambient Light-UV Sensor\',')
 print('        \'short_name\': \'LTR390\'},')
