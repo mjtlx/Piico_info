@@ -1,5 +1,5 @@
 """
- Piico_info
+ Piico_info.py
 
  PiicoDev devices presence tests
 
