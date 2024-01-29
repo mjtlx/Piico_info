@@ -192,6 +192,21 @@ tests.show_hex()
 print('\n>> how_many_connected()')
 print( tests.how_many_connected() )
 
+print('\n>> is_ID_connected(119) -- decimal id')
+print( tests.is_ID_connected(119) )
+
+print('\n>> is_ID_connected(0x77) -- hex id')
+print( tests.is_ID_connected(0x77) )
+
+print('\n>> is_ID_connected(tests.__BME280_ID) -- \'Constant id\', device has unique address ')
+if tests.is_ID_connected(tests.__BME280_ID):
+    print('have BME280')
+print('\n>> is_ID_connected(tests.__POTENTIOMETER_ID) -- \'Constant id\', device is a possible conflicting address ')
+if tests.is_ID_connected(tests.__POTENTIOMETER_ID):
+    print('something is connected, probably Ultrasonic rangefinder since cant distinguish conflicting IDs')
+else:
+    print('oops. no actual device connected.')
+      
 print('\n>> details()')
 tests.details()
 print('\n>> details(\'short\')')
@@ -208,7 +223,7 @@ print('        \'short_name\': \'LTR390\'},')
 print('    }')
 
 extern_list: dict = {
-    0x53: {		# 16.  0x10
+    0x53: {		# 83.  0x53
         'what': 'Ambient Light-UV Sensor',
         'long_name': 'Adafruit LTR390 Ambient Light-UV Sensor',
         'short_name': 'LTR390'},
@@ -218,32 +233,25 @@ print('\n>> Now the details() function can also use the new dictionary')
 print('>> details(\'long\', extern_list) -- add the external list to the function call')
 tests.details('long', extern_list)
 
-print('\n>> is_ID_connected(119) -- decimal id')
-print( tests.is_ID_connected(119) )
-
-print('\n>> is_ID_connected(0x77) -- hex id')
-print( tests.is_ID_connected(0x77) )
-
-print('\n>> is_ID_connected(tests.__BME280_ID) -- \'Constant id\', device has unique address ')
-if tests.is_ID_connected(tests.__BME280_ID):
-    print('have BME280')
-print('\n>> is_ID_connected(tests.__POTENTIOMETER_ID) -- \'Constant id\', device is a possible conflicting address ')
-if tests.is_ID_connected(tests.__POTENTIOMETER_ID):
-    print('something is connected, probably Ultrasonic rangefinder since cant distinguish conflicting IDs')
-else:
-    print('oops. no actual device connected.')
-      
 print('\n>> what_is(0xff) -- NB invalid id value')
 tests.what_is(0xff)	# no such ID, will complain
     
 print('\n>> what_is(53, \'long\')')
 tests.what_is(53, 'long')
 
+print('\n>> The what_is() function can also use the external dictionary')
+print('>> what_is(83, \'long\', extern_list) -- add the external list to the function call')
+tests.what_is(83, 'long', extern_list)
+
 print('\n>> show_all()')
 tests.show_all()
 
 print('\n>> show_all(\'long\',\'show\')')
 tests.show_all('long','show')
+
+print('\n>> The show_all() function can also use the external dictionary')
+print('>> show_all(\'long\',\'show\', extern_list) -- add the external list to the function call')
+tests.show_all('long','show', extern_list)
 
 print('\n********** Example complete ************************')
 ```
@@ -274,6 +282,18 @@ print('\n********** Example complete ************************')
 
 >> how_many_connected()
 5
+
+>> is_ID_connected(119) -- decimal id
+1
+
+>> is_ID_connected(0x77) -- hex id
+1
+
+>> is_ID_connected(tests.__BME280_ID) -- 'Constant id', device has unique address 
+have BME280
+
+>> is_ID_connected(tests.__POTENTIOMETER_ID) -- 'Constant id', device is a possible conflicting address 
+oops. no actual device connected.
 
 >> details()
 16 0x10 Colour Sensor
@@ -308,7 +328,7 @@ print('\n********** Example complete ************************')
 83 0x53 PiicoDev Air Quality Sensor ENS160 (ASW off)
 119 0x77 PiicoDev BME280 Atmospheric Sensor
 
->> Define a additional dictionary with your own devices
+>> Define a additional dictionary with your own device(s)
 extern_list: dict = {
     0x53: {		# 16.  0x10
         'what': 'Ambient Light-UV Sensor',
@@ -316,7 +336,7 @@ extern_list: dict = {
         'short_name': 'LTR390'},
     }
 
->> Now running the details() function can also use the new dictionary
+>> Now the details() function can also use the new dictionary
 >> details('long', extern_list) -- add the external list to the function call
 16 0x10 PiicoDev VEML6040 Colour Sensor
    vvv Possible conflict vvv
@@ -330,18 +350,6 @@ extern_list: dict = {
 83 0x53 Adafruit LTR390 Ambient Light-UV Sensor
 119 0x77 PiicoDev BME280 Atmospheric Sensor
 
->> is_ID_connected(119) -- decimal id
-1
-
->> is_ID_connected(0x77) -- hex id
-1
-
->> is_ID_connected(tests.__BME280_ID) -- 'Constant id', device has unique address 
-have BME280
-
->> is_ID_connected(tests.__POTENTIOMETER_ID) -- 'Constant id', device is a possible conflicting address 
-oops. no actual device connected.
-
 >> what_is(0xff) -- NB invalid id value
 Unknown ID  255
 
@@ -349,6 +357,12 @@ Unknown ID  255
 53 0x35 PiicoDev Ultrasonic Rangefinder Module
    vvv Possible conflict vvv
 53 0x35 PiicoDev Potentiometer (Rotary)
+
+>> The what_is() function can also use the external dictionary
+>> what_is(83, 'long', extern_list) -- add the external list to the function call
+83 0x53 PiicoDev Air Quality Sensor ENS160 (ASW off)
+   vvv Possible EXTERNAL conflict vvv
+83 0x53 Adafruit LTR390 Ambient Light-UV Sensor
 
 >> show_all()
 8 0x8 RGB LED Module
@@ -396,6 +410,35 @@ Unknown ID  255
 53 0x35 PiicoDev Potentiometer (Rotary)
 72 0x48 PiicoDev VEML6030 Ambient Light Sensor (ASW on)
 82 0x52 PiicoDev Air Quality Sensor ENS160 (ASW on)
+
+>> The show_all() function can also use the external dictionary
+>> show_all('long','show', extern_list) -- add the external list to the function call
+8 0x8 PiicoDev 3x RGB LED Module
+16 0x10 PiicoDev VEML6040 Colour Sensor
+24 0x18 PiicoDev 3-Axis Accelerometer LIS3DH (ASW on)
+25 0x19 PiicoDev 3-Axis Accelerometer LIS3DH (ASW off)
+26 0x1a PiicoDev Transceiver 915MHz
+28 0x1c PiicoDev Magnetometer QMC6310
+40 0x28 PiicoDev Capacitive Touch Sensor
+41 0x29 PiicoDev Laser Distance Sensor VL53L1X
+44 0x2c PiicoDev RFID Module (NFC 13.56MHz)
+53 0x35 PiicoDev Ultrasonic Rangefinder Module
+60 0x3c PiicoDev OLED Module SSD1306
+66 0x42 PiicoDev Button
+68 0x44 PiicoDev Servo Driver (4 Channel)
+72 0x48 PiicoDev TMP117 Precision Temperature Sensor
+82 0x52 PiicoDev Real Time Clock (RTC) RV3028
+83 0x53 PiicoDev Air Quality Sensor ENS160 (ASW off)
+92 0x5c PiicoDev Buzzer Module
+118 0x76 PiicoDev Pressure Sensor MS5637
+119 0x77 PiicoDev BME280 Atmospheric Sensor
+-- conflicting --
+16 0x10 PiicoDev VEML6030 Ambient Light Sensor (ASW off)
+53 0x35 PiicoDev Potentiometer (Rotary)
+72 0x48 PiicoDev VEML6030 Ambient Light Sensor (ASW on)
+82 0x52 PiicoDev Air Quality Sensor ENS160 (ASW on)
+-- external list --
+83 0x53 Adafruit LTR390 Ambient Light-UV Sensor
 
 ********** Example complete ************************
 ```

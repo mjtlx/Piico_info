@@ -30,6 +30,21 @@ tests.show_hex()
 print('\n>> how_many_connected()')
 print( tests.how_many_connected() )
 
+print('\n>> is_ID_connected(119) -- decimal id')
+print( tests.is_ID_connected(119) )
+
+print('\n>> is_ID_connected(0x77) -- hex id')
+print( tests.is_ID_connected(0x77) )
+
+print('\n>> is_ID_connected(tests.__BME280_ID) -- \'Constant id\', device has unique address ')
+if tests.is_ID_connected(tests.__BME280_ID):
+    print('have BME280')
+print('\n>> is_ID_connected(tests.__POTENTIOMETER_ID) -- \'Constant id\', device is a possible conflicting address ')
+if tests.is_ID_connected(tests.__POTENTIOMETER_ID):
+    print('something is connected, probably Ultrasonic rangefinder since cant distinguish conflicting IDs')
+else:
+    print('oops. no actual device connected.')
+      
 print('\n>> details()')
 tests.details()
 print('\n>> details(\'short\')')
@@ -46,7 +61,7 @@ print('        \'short_name\': \'LTR390\'},')
 print('    }')
 
 extern_list: dict = {
-    0x53: {		# 16.  0x10
+    0x53: {		# 83.  0x53
         'what': 'Ambient Light-UV Sensor',
         'long_name': 'Adafruit LTR390 Ambient Light-UV Sensor',
         'short_name': 'LTR390'},
@@ -56,32 +71,25 @@ print('\n>> Now the details() function can also use the new dictionary')
 print('>> details(\'long\', extern_list) -- add the external list to the function call')
 tests.details('long', extern_list)
 
-print('\n>> is_ID_connected(119) -- decimal id')
-print( tests.is_ID_connected(119) )
-
-print('\n>> is_ID_connected(0x77) -- hex id')
-print( tests.is_ID_connected(0x77) )
-
-print('\n>> is_ID_connected(tests.__BME280_ID) -- \'Constant id\', device has unique address ')
-if tests.is_ID_connected(tests.__BME280_ID):
-    print('have BME280')
-print('\n>> is_ID_connected(tests.__POTENTIOMETER_ID) -- \'Constant id\', device is a possible conflicting address ')
-if tests.is_ID_connected(tests.__POTENTIOMETER_ID):
-    print('something is connected, probably Ultrasonic rangefinder since cant distinguish conflicting IDs')
-else:
-    print('oops. no actual device connected.')
-      
 print('\n>> what_is(0xff) -- NB invalid id value')
 tests.what_is(0xff)	# no such ID, will complain
     
 print('\n>> what_is(53, \'long\')')
 tests.what_is(53, 'long')
 
+print('\n>> The what_is() function can also use the external dictionary')
+print('>> what_is(83, \'long\', extern_list) -- add the external list to the function call')
+tests.what_is(83, 'long', extern_list)
+
 print('\n>> show_all()')
 tests.show_all()
 
 print('\n>> show_all(\'long\',\'show\')')
 tests.show_all('long','show')
+
+print('\n>> The show_all() function can also use the external dictionary')
+print('>> show_all(\'long\',\'show\', extern_list) -- add the external list to the function call')
+tests.show_all('long','show', extern_list)
 
 print('\n********** Example complete ************************')
 

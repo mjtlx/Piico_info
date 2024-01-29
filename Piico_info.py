@@ -341,26 +341,37 @@ class Piico_info(object):
                     print('Unknown device at ID ', i)
 
     # what_is(id) - prints various levels of information from the dictionaries of the given ID
-    def what_is(self, id, mode='what'):
+    def what_is(self, id, mode='what', extlist=None):
         hit = 0
         if id in self.PiicoDev_list:
             self.print_main(id, mode)
-            hit = 1
+            hit = 1  # found it here
         if id in self.PiicoDev_conf_list:
-            print('   vvv Possible conflict vvv')
+            if hit == 1:  # have we already found it?
+                print('   vvv Possible conflict vvv')
             self.print_conf(id, mode)
-            hit = 1
+            hit = 1 # set this so so we can test for external conflicts also
+        if extlist != None:
+            if id in extlist:
+                if hit == 1:  # have we already found it at least once?
+                    print('   vvv Possible EXTERNAL conflict vvv')
+                self.print_ext(id, mode, extlist)
+                hit = 1 # set this so we don't trigger the next line
         if hit == 0:
             print('Unknown ID ', id)
 
     # show_all() - prints various levels of information from the main/conflict internal dictonaries
-    def show_all(self, mode='what', conf='noshow' ):
+    def show_all(self, mode='what', conf=None, extlist=None ):
         for i in sorted(self.PiicoDev_list):
             self.print_main(i, mode)
-        if conf != 'noshow':
+        if conf != None:
             print('-- conflicting --')
             for i in sorted(self.PiicoDev_conf_list):
                 self.print_conf(i, mode)
+        if extlist != None:
+            print('-- external list --')
+            for i in sorted(extlist):
+                self.print_ext(i,mode,extlist)
                 
     # Print common functions
     # print information from  the main dictionary
@@ -382,6 +393,16 @@ class Piico_info(object):
         else:   # assume 'what'
             s = self.PiicoDev_conf_list[id]['what']
         print(id, hex(id), s)
+
+    # print information from the external user dictionary
+    def print_ext(self, i, mode, extlist):
+        if mode == 'long':
+            s = extlist[i]['long_name']
+        elif mode == 'short':
+            s = extlist[i]['short_name']
+        else:   # assume 'what'
+            s = extlist[i]['what']
+        print(i, hex(i), s)
 
 #
 # end of  class
