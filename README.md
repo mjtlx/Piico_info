@@ -116,7 +116,7 @@ and displays all the selected information 'type'
     show_all('short')   - prints all 'short names' from the main internal dictonary
     show_all('long')    - prints all 'long names' from the main internal dictonary
         
-##### Show option
+#### Show option
   
 With extra option 'show' also displays similar entries from the conflicts dictionary (see below)
   
