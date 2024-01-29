@@ -1,6 +1,6 @@
 # Piico_info (a.k.a. PiicoDev devices presence tests)
 
-This library provides support for the Core electronics PiicoDev system, generating information about connected devices.  
+This library provides support for the Core Electronics PiicoDev system, generating information about connected devices.  
     Murray T 20240128   (v 1.0)
     @Murray125532
 
